@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 
-const App = () => {``
+const App = () => {
   const [text, setText] = useState("");
   const [data, setData] = useState([]);
   const socketClient = useMemo(() => io("ws://localhost:3001"), []);
