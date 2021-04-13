@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useMemo, useState } from "react";
+import io from "socket.io-client";
 
-function App() {
+const App = () => {``
+  const [text, setText] = useState("");
+  const [data, setData] = useState([]);
+  const socketClient = useMemo(() => io("ws://localhost:3001"), []);
+
+  useEffect(() => { //componentDidMount
+    socketClient.on("connect", () => {
+      console.log("connection server");
+    });
+    socketClient.on('chat message', ((msg) => {
+      console.log("from server.js : " + msg);
+      setData(data => data.concat(msg));
+    }));
+  }, []);
+  
+  const handleChange = e => {
+    setText(e.target.value);
+  }
+
+  const handleClick = () => {
+    if (text) {
+      socketClient.emit('chat message', text);
+      setText('');
+    }
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {data.map((data,index) => {
+        return(
+          <div key={index}>
+            {data}
+          </div>
+        )
+      })}
+      <input name="text" onChange={handleChange} value={text}/>
+      <button onClick={handleClick}>전송</button>
     </div>
   );
 }
