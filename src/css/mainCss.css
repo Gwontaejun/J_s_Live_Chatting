@@ -1,0 +1,50 @@
+html, body, #root{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.App {
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 3%;
+    width:40%;
+    height:99%;
+}
+
+.chatList {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: auto;
+    margin-top: 1%;
+    border: 1px solid black;
+    width: 98%;
+    height: 87%;
+    overflow-y: auto;
+}
+
+.chatListItem {
+    font-size: 25px;
+    margin: 0 auto 2% auto;
+    border: 1px solid orangered;
+    height: 6%;
+    width: 97%;
+}
+
+.chatSend {
+    display: flex;
+    margin: auto;
+    margin-top: 1%;
+    border: 1px solid black;
+    width: 98%;
+    height: 10%;
+}
+
+.chat {
+    width:80%;
+}
+
+.submit, .clear {
+    width:10%;
+}

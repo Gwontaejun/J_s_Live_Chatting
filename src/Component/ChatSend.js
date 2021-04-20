@@ -1,38 +1,57 @@
-import { useEffect, useMemo, useState } from "react";
-import io from "socket.io-client";
+import { useState } from "react";
 
 const ChatSend = (props) => {
-    //useMemo = 리렌더링이 일어났을때 해당 값이 렌더링 전과 같을시 해당 데이터는 초기화 안함.
-    //useState = 상태지정
-    //useEffect = 클래스형 컴포넌트의 라이프사이클API 역할을 함.
-    
-    const userName = useMemo(() => prompt("이름을 설정해주십시오."), []); //초기화면 이름설정
     const [chat, setChat] = useState(""); //채팅 상태 초기화
-    const socketClient = useMemo(() => io("http://localhost:3001"), []); //socket.io-client를 3001번 포트로 접속.
-
-    useEffect(() => {
-        socketClient.on('chat message', ((name, msg) => { //서버로부터 chat message라는 메시지를 전송받을때 실행
-            console.log("from server.js -> name : " + name, "message : " + msg);
-            props.onChatSend(name + ":" + msg);
-        }));
-    }, []);
-
+    const [enterTime, setEnterTime] = useState("");
+    const [autoEnterCount, setAutoEnterCount] = useState(0);
+    
     const handleChange = e => {
         setChat(e.target.value);
     }
 
-    const handleClick = () => { //전송버튼 클릭시 서버에 chat message 메시지 전송
-        if (chat) {
-            socketClient.emit('chat message', userName, chat);
-            setChat('');
-        }
+    const handleClick = () => { //서버에 chat message 메시지 전송 및 도배금지 등 전송시 발생 이벤트
+        var TNF = true;
+
+        if (chat.replace(/ /g, "").length !== 0) {
+            if (enterTime !== "") {
+                if ((new Date().getTime() - enterTime.getTime()) / 1000 <= 2) {
+                    if (autoEnterCount === 4) {
+                        setAutoEnterCount(0);
+                        TNF = false;
+                        alert("도배로 인하여 10초간 채팅이 금지됩니다.");
+                        document.querySelector(".chat").disabled = true;
+                        document.querySelector(".submit").disabled = true;
+                        setTimeout(function () { // 5초후에 채팅가능
+                            document.querySelector(".chat").disabled = false;
+                            document.querySelector(".submit").disabled = false;
+                        }, 1000 * 10);
+                    } else {
+                        setAutoEnterCount(autoEnterCount + 1);
+                    }
+                }
+            }
+            if (chat && TNF === true) {
+                props.socketClient.emit('chat message', props.userName, chat);
+                setEnterTime(new Date());
+            }
+        } else alert("빈값은 입력하실수 없습니다.");
+
+        setChat('');
     }
 
     return (
-        <div>
-            <input name="chat" onChange={handleChange} value={chat} />
-            <button onClick={handleClick}>전송</button>
-            <button onClick={props.onClickChatClear}>청소</button>
+        <div className="chatSend">
+            <input name="chat" className="chat"
+                onKeyPress={(ev) => { //엔터 입력시 작동하는 이벤트
+                    if (ev.key === 'Enter') {
+                        handleClick();
+                        ev.preventDefault();
+                    }
+                }}
+                onChange={handleChange} value={chat} />
+
+            <button className="submit" onClick={handleClick}>전송</button>
+            <button className="clear" onClick={props.onClickChatClear}>청소</button>
         </div>
     )
 }

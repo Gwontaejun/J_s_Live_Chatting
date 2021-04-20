@@ -3,6 +3,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*" } });
+var chatArr = [];
 
 io.on('connection', (socket) => {
     console.log('a user connected');
@@ -11,8 +12,9 @@ io.on('connection', (socket) => {
         socket.emit('disconnected');
     });
     socket.on('chat message', (name, msg) => { //클라이언트로부터 chat message라는 메시지를 전송받을때 실행
-        io.emit('chat message', name, msg);
-        console.log('message: ' + name, msg);
+        chatArr = chatArr.concat(name+":"+msg);
+        io.emit('chat message', chatArr);
+        console.log('message: ' + name, chatArr);
     });
 });
 
