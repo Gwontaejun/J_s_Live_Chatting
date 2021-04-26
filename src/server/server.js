@@ -8,13 +8,18 @@ var chatArr = [];
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {
-        console.log('user disconnected');
         socket.emit('disconnected');
+        console.log('user disconnected');
     });
     socket.on('chat message', (name, msg) => { //클라이언트로부터 chat message라는 메시지를 전송받을때 실행
         chatArr = chatArr.concat(name+":"+msg);
         io.emit('chat message', chatArr);
         console.log('message: ' + name, chatArr);
+    });
+    socket.on('clear', () => {
+        chatArr = [];
+        io.emit('chat message', chatArr);
+        console.log("Clear Chatting !", chatArr);      
     });
 });
 

@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import { useState } from "react";
 
 const ChatSend = (props) => {
@@ -15,7 +16,7 @@ const ChatSend = (props) => {
         if (chat.replace(/ /g, "").length !== 0) {
             if (enterTime !== "") {
                 if ((new Date().getTime() - enterTime.getTime()) / 1000 <= 2) {
-                    if (autoEnterCount === 4) {
+                    if (autoEnterCount === 10) {
                         setAutoEnterCount(0);
                         TNF = false;
                         alert("도배로 인하여 10초간 채팅이 금지됩니다.");
@@ -39,6 +40,10 @@ const ChatSend = (props) => {
         setChat('');
     }
 
+    const clearClick = () => {
+        props.socketClient.emit('clear');
+    }
+
     return (
         <div className="chatSend">
             <input name="chat" className="chat"
@@ -50,8 +55,8 @@ const ChatSend = (props) => {
                 }}
                 onChange={handleChange} value={chat} />
 
-            <button className="submit" onClick={handleClick}>전송</button>
-            <button className="clear" onClick={props.onClickChatClear}>청소</button>
+            <Button className="submit" variant="contained" color="primary" onClick={handleClick}>전송</Button>
+            <Button className="clear" variant="contained" color="secondary" onClick={clearClick}>청소</Button>
         </div>
     )
 }

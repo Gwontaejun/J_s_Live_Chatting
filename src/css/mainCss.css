@@ -17,10 +17,10 @@ html, body, #root{
     display: flex;
     flex-direction: column-reverse;
     margin: auto;
-    margin-top: 1%;
+    margin-top: 6%;
     border: 1px solid black;
-    width: 98%;
-    height: 87%;
+    width: 95%;
+    height: 80%;
     overflow-y: auto;
 }
 
@@ -37,7 +37,7 @@ html, body, #root{
     margin: auto;
     margin-top: 1%;
     border: 1px solid black;
-    width: 98%;
+    width: 95%;
     height: 10%;
 }
 

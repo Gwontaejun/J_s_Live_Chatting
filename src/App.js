@@ -15,12 +15,11 @@ const App = () => {
   const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
-    if (userName === null || userName.replace(/(\s*)/g, "") === "") {
+    if (userName === null || userName.replace(/ /g, "").length === "") {
       alert("사용하실 이름을 입력해주세요.");
       window.location.reload();
     }
     socketClient.on('chat message', ((msg) => { //서버로부터 chat message라는 메시지를 전송받을때 실행
-      console.log("name", msg);
       setChatList(msg);
     }));
   }, []);

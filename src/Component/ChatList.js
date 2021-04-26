@@ -1,3 +1,5 @@
+import { Paper } from "@material-ui/core";
+
 const ChatList = (props) => {
     console.log("props.",props.chatList);
     return (
@@ -5,9 +7,9 @@ const ChatList = (props) => {
             {props.chatList.reverse().map((data, index) => {
                 console.log("datadatadata",data);
                 return (
-                    <div key={index} className="chatListItem">
+                    <Paper elevation={3} key={index} className="chatListItem">
                         <span>{data}</span>
-                    </div>
+                    </Paper>
                 )
             })}
         </div>
