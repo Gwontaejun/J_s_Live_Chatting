@@ -5,7 +5,7 @@ const ChatSend = (props) => {
     const [chat, setChat] = useState(""); //채팅 상태 초기화
     const [enterTime, setEnterTime] = useState("");
     const [autoEnterCount, setAutoEnterCount] = useState(0);
-    
+
     const handleChange = e => {
         setChat(e.target.value);
     }
@@ -22,7 +22,7 @@ const ChatSend = (props) => {
                         alert("도배로 인하여 10초간 채팅이 금지됩니다.");
                         document.querySelector(".chat").disabled = true;
                         document.querySelector(".submit").disabled = true;
-                        setTimeout(function () { // 5초후에 채팅가능
+                        setTimeout(function () { // 10초후에 채팅가능
                             document.querySelector(".chat").disabled = false;
                             document.querySelector(".submit").disabled = false;
                         }, 1000 * 10);
@@ -40,13 +40,13 @@ const ChatSend = (props) => {
         setChat('');
     }
 
-    const clearClick = () => {
-        props.socketClient.emit('clear');
-    }
+    // const clearClick = () => {
+    //     props.socketClient.emit('clear');
+    // }
 
     return (
         <div className="chatSend">
-            <input name="chat" className="chat"
+            <textarea name="chat" className="chat"
                 onKeyPress={(ev) => { //엔터 입력시 작동하는 이벤트
                     if (ev.key === 'Enter') {
                         handleClick();
@@ -56,7 +56,7 @@ const ChatSend = (props) => {
                 onChange={handleChange} value={chat} />
 
             <Button className="submit" variant="contained" color="primary" onClick={handleClick}>전송</Button>
-            <Button className="clear" variant="contained" color="secondary" onClick={clearClick}>청소</Button>
+            {/* <Button className="clear" variant="contained" color="secondary" onClick={clearClick}>청소</Button> */}
         </div>
     )
 }

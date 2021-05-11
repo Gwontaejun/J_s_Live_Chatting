@@ -7,7 +7,7 @@ const ChatList = (props) => {
                 console.log("datadatadata",data);
                 return (
                     <Paper elevation={3} key={index} className="chatListItem">
-                        <span>{data}</span>
+                        <span style={{marginLeft:"1%"}}>{data}</span>
                     </Paper>
                 )
             })}

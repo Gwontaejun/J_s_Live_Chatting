@@ -19,6 +19,7 @@ html, body, #root{
     margin: auto;
     margin-top: 6%;
     border: 1px solid black;
+    border-radius: 3%;
     width: 95%;
     height: 80%;
     overflow-y: auto;
@@ -28,7 +29,6 @@ html, body, #root{
     font-size: 25px;
     margin: 0 auto 2% auto;
     border: 1px solid orangered;
-    height: 6%;
     width: 97%;
 }
 
@@ -36,15 +36,16 @@ html, body, #root{
     display: flex;
     margin: auto;
     margin-top: 1%;
-    border: 1px solid black;
     width: 95%;
-    height: 10%;
+    height: 12%;
 }
 
 .chat {
     width:80%;
+    font-size: 200%;
+    resize: none;
 }
 
-.submit, .clear {
-    width:10%;
+.submit {
+    width:20%;
 }

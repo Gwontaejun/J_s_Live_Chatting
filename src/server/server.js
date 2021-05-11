@@ -16,11 +16,11 @@ io.on('connection', (socket) => {
         io.emit('chat message', chatArr);
         console.log('message: ' + name, chatArr);
     });
-    socket.on('clear', () => {
-        chatArr = [];
-        io.emit('chat message', chatArr);
-        console.log("Clear Chatting !", chatArr);      
-    });
+    // socket.on('clear', () => {
+    //     chatArr = [];
+    //     io.emit('chat message', chatArr);
+    //     console.log("Clear Chatting !", chatArr);      
+    // });
 });
 
 server.listen(3001, () => {
